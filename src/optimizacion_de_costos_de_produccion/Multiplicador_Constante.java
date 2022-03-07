@@ -1,6 +1,6 @@
-
 package optimizacion_de_costos_de_produccion;
 
+import javax.swing.table.DefaultTableModel;
 
 public class Multiplicador_Constante extends javax.swing.JFrame {
 
@@ -36,13 +36,9 @@ public class Multiplicador_Constante extends javax.swing.JFrame {
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Índice", "Semilla", "Pseudo Número"
             }
         ));
         jScrollPane1.setViewportView(Tabla);
@@ -161,6 +157,41 @@ public class Multiplicador_Constante extends javax.swing.JFrame {
 
     private void btnGenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenActionPerformed
         // TODO add your handling code here:
+        try {
+            int constant = Integer.parseInt(this.Const.getText());
+            long seed = Integer.parseInt(this.Seed.getText());
+            int numbersToGenerate = Integer.parseInt(this.Numeros.getText());
+
+            double[] pseudoNumbers = new double[numbersToGenerate];
+            long[] seeds = new long[numbersToGenerate];
+            for (int i = 0; i < numbersToGenerate; i++) {
+                long xi = (constant * (i == 0 ? seed : seeds[i - 1]));
+
+                if (i < seeds.length) {
+                    seeds[i] = Integer.toUnsignedLong((int) xi);
+                }
+                String xiTemp = String.valueOf(xi);
+                int numbersToPickLength = String.valueOf(constant).length();
+                //GET PSEUDONUMBER
+
+                double result = Double.parseDouble(xiTemp.substring(2, 2 + numbersToPickLength));
+                pseudoNumbers[i] = result / 10000;
+                //System.out.println("Result: " + (result / 10000));
+            }
+            DefaultTableModel model = (DefaultTableModel) this.Tabla.getModel();
+            int cont = 0;
+            for (Double pseudoNumber : pseudoNumbers) {
+                if (cont == 0) {
+                    model.addRow(new Object[]{cont + 1, seed, pseudoNumber.toString()});
+                } else {
+                    model.addRow(new Object[]{cont + 1, seeds[cont - 1], pseudoNumber.toString()});
+                }
+                cont++;
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
     }//GEN-LAST:event_btnGenActionPerformed
 
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed

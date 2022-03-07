@@ -1,4 +1,3 @@
-
 package optimizacion_de_costos_de_produccion;
 
 import java.text.DecimalFormat;
@@ -10,17 +9,17 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.text.DecimalFormat;
-import javax.swing. *;
-
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class Congruencial_Lineal extends javax.swing.JFrame {
-    
+
     double xi = 0;
     double k = 0;
     double c = 0;
     double g = 0;
     double a = 0;
-    double m ;
+    double m;
     double ri = 0;
     double b = 0;
     int iteracion;
@@ -58,14 +57,10 @@ public class Congruencial_Lineal extends javax.swing.JFrame {
         NumGen = new javax.swing.JTextField();
 
         TablaLineal.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+            new Object [][] {        ,
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Índice", "Semilla" ,"Número",
             }
         ));
         jScrollPane1.setViewportView(TablaLineal);
@@ -201,41 +196,43 @@ public class Congruencial_Lineal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-        // TODO add your handling code here:
-        double xi = Double.parseDouble(Seed.getText());
-        double k = Double.parseDouble(ConsMul.getText());
-        double c = Double.parseDouble(ConsAd.getText());
-        double g = Double.parseDouble(Mod.getText());
-        iteracion = Integer.parseInt(NumGen.getText()) ;
-  
-        JTable tx = new JTable();
-        tx.setVisible(false);
-        for( int i = 1; i <= iteracion; i++) {
-     
-            a = 1 + 4 * k;
-            m = Math.pow(2, g);
-            xi = (a * xi + c) % m;
+        //GET USER INPUTS AND PARSE TO DOUBLE VARIABLES
+        try {
+            double seed = Double.parseDouble(this.Seed.getText());
+            double multiplicativeConstant = Double.parseDouble(this.ConsMul.getText());
+            double aditiveConstant = Double.parseDouble(this.ConsAd.getText());
+            double module = Double.parseDouble(this.Mod.getText());
+            int numbersToGenerate = Integer.parseInt(this.NumGen.getText()); // Integer casue of numbers to generate cannot be flaoting
+            //Loop To generate numbers
+            Double[] pseudoNumbers = new Double[numbersToGenerate]; // Array to storage numbers generated
+            Double[] seedsXi = new Double[numbersToGenerate];
+            for (int i = 0; i < numbersToGenerate; i++) {
+                //If i = 0, its first iteration                
+                double xi = ((multiplicativeConstant * (i == 0 ? seed : seedsXi[i - 1])) + aditiveConstant) % module;
+                //Added to array so we can use it in next iteration
+                if (i < seedsXi.length) {
+                    seedsXi[i] = xi;
+                }
+                double pseudoNumber = xi / module;
+                pseudoNumbers[i] = pseudoNumber;
+            }
+            DefaultTableModel model = (DefaultTableModel) this.TablaLineal.getModel();
 
-            ri = xi / (m -1) ;
+            //Append rows to JTable
+            int cont = 0;
+            for (Double pseudoNumber : pseudoNumbers) {
+                if (cont == 0) {
+                    model.addRow(new Object[]{cont + 1, seed, pseudoNumber.toString()});
+                } else {
+                    model.addRow(new Object[]{cont + 1, seedsXi[cont - 1], pseudoNumber.toString()});
+                }
+                cont++;
 
-  
-            DecimalFormat formato = new DecimalFormat("#.000");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
 
-          
-                 String w = Integer.toString(i);
-            String y = Double.toString(xi);
-            String z = Double.toString(ri);
-
-
-            String imprimirw = w;
-            String imprimiry = y;
-            String imprimirz = z;
-
-
-         TablaLineal.append(imprimirw +" =  " + imprimiry+"                         "+formato.format(ri) +"\n");
- 
-       tx.append(formato.format(ri) +"\n");
-         }   
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed

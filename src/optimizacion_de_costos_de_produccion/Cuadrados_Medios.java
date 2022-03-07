@@ -1,4 +1,3 @@
-
 package optimizacion_de_costos_de_produccion;
 
 import javax.swing.JOptionPane;
@@ -10,12 +9,11 @@ public class Cuadrados_Medios extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         DefaultTableModel modelo = new DefaultTableModel();
-        String[] columns = {"Y","SEMILLA","RESULTADO","X"};
+        String[] columns = {"Y", "SEMILLA", "RESULTADO", "X"};
         modelo.setColumnIdentifiers(columns);
-        jTable1.setModel(modelo);        
+        jTable1.setModel(modelo);
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -111,101 +109,95 @@ public class Cuadrados_Medios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetActionPerformed
+
         Proyecto_Simulacion frm = new Proyecto_Simulacion();
         frm.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnRetActionPerformed
 
     private void btnGenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenActionPerformed
-       if(txtSeed.getText().length()>0 && Integer.parseInt(txtSeed.getText())>999 && Integer.parseInt(txtSeed.getText())<=10000){
-        Busqueda.init();
+        if (txtSeed.getText().length() > 0 && Integer.parseInt(txtSeed.getText()) > 999 && Integer.parseInt(txtSeed.getText()) <= 10000) {
+            Busqueda.init();
 
             boolean is_number = true;
-            
-            try{
-            int a;
+
+            try {
+                int a;
                 a = Integer.parseInt(txtSeed.getText().toString());
-            }
-            catch(java.lang.NumberFormatException nfe){
+            } catch (java.lang.NumberFormatException nfe) {
                 JOptionPane.showMessageDialog(rootPane, "Debes escribir caracteres numericos");
                 is_number = false;
             }
 
-            if(is_number==true){
-            DefaultTableModel modelo = new DefaultTableModel();
-            int contador=0;
-            int xaux = 0;
-            String cadena = "";
-            String[] columnas = {"Y0","Xn","Operaciones","Rn"};
-            modelo.setColumnIdentifiers(columnas);
-            modelo.setColumnIdentifiers(columnas);
-            int seed = Integer.parseInt(txtSeed.getText());
-            xaux = seed;
-            int copia = seed;
-            while(true){
-                int op = (seed*seed);
-                char[] numeros = (""+op).toCharArray();
-                
-                int longitud = numeros.length;
-                System.out.println(""+longitud);
-                if(longitud==4){ seed = op ;}
-                else if(longitud==1){ 
-                     cadena = "" + 0 + "" +0 + "" +0+ ""+numeros[0];
-                    seed = Integer.parseInt(cadena);
-                }
-                else if(longitud==2){ 
-                     cadena = "" + 0 + "" +0 + "" + numeros[0]+ ""+numeros[1];
-                    seed = Integer.parseInt(cadena);
-                }
-                else if(longitud==3){ 
-                     cadena = "" + 0 + "" + numeros[0] + "" + numeros[1]+ ""+numeros[2];
-                    seed = Integer.parseInt(cadena);
-                }
-                else if(longitud==5){ 
-                     cadena = "" + numeros[0] + "" + numeros[1] + "" + numeros[2]+ ""+numeros[3];
-                    seed = Integer.parseInt(cadena);
-                }
-                else if(longitud==6){ 
-                     cadena = "" + numeros[1] + "" + numeros[2] + "" + numeros[3]+ ""+numeros[4];
-                    seed = Integer.parseInt(cadena);
-                }
-                else if(longitud==7){ 
-                    cadena = "" + numeros[1] + "" + numeros[2] + "" + numeros[3]+ ""+numeros[4];
-                    seed = Integer.parseInt(cadena);
-                }
-                else if(longitud==8){ 
-                     cadena = "" + numeros[2] + "" + numeros[3] + "" + numeros[4]+ ""+numeros[5];
-                    seed = Integer.parseInt(cadena);
-                }
-                modelo.addRow(new Object[]{contador,xaux,op,cadena});
+            if (is_number == true) {
+                DefaultTableModel modelo = new DefaultTableModel();
+                int contador = 0;
+                int xaux = 0;
+                String cadena = "";
+                String[] columnas = {"Y0", "Xn", "Operaciones", "Rn"};
+                modelo.setColumnIdentifiers(columnas);
+                modelo.setColumnIdentifiers(columnas);
+                int seed = Integer.parseInt(txtSeed.getText());
                 xaux = seed;
-                if(seed==copia){
-                    JOptionPane.showMessageDialog(rootPane, "la semilla inicial \""+copia+"\" se repite en : " + contador);                    
-                    break; }
-                else if(seed==0){
-                    JOptionPane.showMessageDialog(rootPane, "el ciclo termina en 000 : " + contador);
-                    break; }
-                if(Busqueda.Vacio()){
-                    Busqueda.Agregar(cadena);
-                }else{
-                    if(!Busqueda.Existe(cadena)){
-                        Busqueda.Agregar(cadena);
-                    }else{
-                        JOptionPane.showMessageDialog(rootPane, "El numero se repite en "+ contador);
+                int copia = seed;
+                while (true) {
+                    int op = (seed * seed);
+                    char[] numeros = ("" + op).toCharArray();
+
+                    int longitud = numeros.length;
+                    System.out.println("" + longitud);
+                    if (longitud == 4) {
+                        seed = op;
+                    } else if (longitud == 1) {
+                        cadena = "" + 0 + "" + 0 + "" + 0 + "" + numeros[0];
+                        seed = Integer.parseInt(cadena);
+                    } else if (longitud == 2) {
+                        cadena = "" + 0 + "" + 0 + "" + numeros[0] + "" + numeros[1];
+                        seed = Integer.parseInt(cadena);
+                    } else if (longitud == 3) {
+                        cadena = "" + 0 + "" + numeros[0] + "" + numeros[1] + "" + numeros[2];
+                        seed = Integer.parseInt(cadena);
+                    } else if (longitud == 5) {
+                        cadena = "" + numeros[0] + "" + numeros[1] + "" + numeros[2] + "" + numeros[3];
+                        seed = Integer.parseInt(cadena);
+                    } else if (longitud == 6) {
+                        cadena = "" + numeros[1] + "" + numeros[2] + "" + numeros[3] + "" + numeros[4];
+                        seed = Integer.parseInt(cadena);
+                    } else if (longitud == 7) {
+                        cadena = "" + numeros[1] + "" + numeros[2] + "" + numeros[3] + "" + numeros[4];
+                        seed = Integer.parseInt(cadena);
+                    } else if (longitud == 8) {
+                        cadena = "" + numeros[2] + "" + numeros[3] + "" + numeros[4] + "" + numeros[5];
+                        seed = Integer.parseInt(cadena);
+                    }
+                    modelo.addRow(new Object[]{contador, xaux, op, cadena});
+                    xaux = seed;
+                    if (seed == copia) {
+                        JOptionPane.showMessageDialog(rootPane, "la semilla inicial \"" + copia + "\" se repite en : " + contador);
+                        break;
+                    } else if (seed == 0) {
+                        JOptionPane.showMessageDialog(rootPane, "el ciclo termina en 000 : " + contador);
                         break;
                     }
+                    if (Busqueda.Vacio()) {
+                        Busqueda.Agregar(cadena);
+                    } else {
+                        if (!Busqueda.Existe(cadena)) {
+                            Busqueda.Agregar(cadena);
+                        } else {
+                            JOptionPane.showMessageDialog(rootPane, "El numero se repite en " + contador);
+                            break;
+                        }
+                    }
+
+                    contador++;
                 }
-                
-                contador++;
+                jTable1.setModel(modelo);
             }
-            jTable1.setModel(modelo);
-        }
-        }
-        else if(txtSeed.getText().length()==0){
-        JOptionPane.showMessageDialog(rootPane, "Debes Ingresar una Semilla");
-        }
-        else if(Integer.parseInt(txtSeed.getText())<=999||Integer.parseInt(txtSeed.getText())>=10000){
-        JOptionPane.showMessageDialog(rootPane, "La semilla debe Contener 4 digitos");
+        } else if (txtSeed.getText().length() == 0) {
+            JOptionPane.showMessageDialog(rootPane, "Debes Ingresar una Semilla");
+        } else if (Integer.parseInt(txtSeed.getText()) <= 999 || Integer.parseInt(txtSeed.getText()) >= 10000) {
+            JOptionPane.showMessageDialog(rootPane, "La semilla debe Contener 4 digitos");
         }
     }//GEN-LAST:event_btnGenActionPerformed
 
